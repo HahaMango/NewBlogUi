@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { isEmptyString } from '../utils/utils.js';
+
 export default {
     data:function(){
         return{
@@ -16,6 +18,9 @@ export default {
     props:["content","roteUrl"],
     methods:{
         ClickEvent:function(){
+            if(isEmptyString(this.roteUrl)){
+                return;
+            }
             this.$router.push(this.roteUrl);
         }
     }

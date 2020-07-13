@@ -10,7 +10,7 @@
       <el-button>el-button</el-button>
     </div>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <NavigationButton content="测试导航按钮" roteUrl="/api/child"/>
+    <NavigationButton content="测试导航按钮"/>
   </div>
 </template>
 
