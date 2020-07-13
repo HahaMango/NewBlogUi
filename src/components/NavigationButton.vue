@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="navigation-button">
+    <button type="button" class="navigation-button" v-on:click="ClickEvent">
         <div>
             {{content}}
         </div>
@@ -13,7 +13,12 @@ export default {
             
         }
     },
-    props:["content"]
+    props:["content","roteUrl"],
+    methods:{
+        ClickEvent:function(){
+            this.$router.push(this.roteUrl);
+        }
+    }
 }
 </script>
 
