@@ -15,13 +15,13 @@ export default {
             
         }
     },
-    props:["content","roteUrl"],
+    props:["content","routeUrl"],
     methods:{
         ClickEvent:function(){
-            if(isEmptyString(this.roteUrl)){
+            if(isEmptyString(this.routeUrl)){
                 return;
             }
-            this.$router.push(this.roteUrl);
+            this.$router.push(this.routeUrl);
         }
     }
 }
