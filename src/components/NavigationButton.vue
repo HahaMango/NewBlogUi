@@ -30,7 +30,7 @@ export default {
 <style>
 
 .navigation-button{
-    color: black;
+    color: inherit;
     background-color: transparent;
     border: none;
     font-size: 1.1em;
@@ -43,8 +43,8 @@ export default {
 }
 
 .navigation-button:focus{
-    color: rgb(180, 180, 180);
-    border-color: black;
+    color: rgb(100, 100, 100);
+    border-color: rgb(100, 100, 100);
 }
 
 .navigation-button div{

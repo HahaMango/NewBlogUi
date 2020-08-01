@@ -8,6 +8,9 @@
 
 export default {
   name: 'app',
+  created:function(){
+    window.document.documentElement.style.backgroundColor = "#2b2b2b";
+  },
   components: {
   }
 }
@@ -19,24 +22,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 10px;
+  color: #c5c5c5;
+  margin-top: 1.3em;
 }
-
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
 </style>
