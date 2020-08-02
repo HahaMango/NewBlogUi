@@ -31,7 +31,7 @@
       <el-main></el-main>
       <el-footer>
         <div>
-          <a href="https://github.com" target="_blank">
+          <a href="https://github.com/HahaMango/NewBlogUi" target="_blank">
             <img :src="GithubImgPath"/>
           </a>
           <p>power by | <b><i>Vue</i></b> | <b><i>Element</i></b> | <b><i>.net Core</i></b></p>
