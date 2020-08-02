@@ -16,18 +16,13 @@
 //
 /*--------------------------------------------------------------------------*/
 
-<template>
-    <div>
-        <ArticleListItem title="Web开发中的编码问题" desc="测试文章描述" createtime="2020-08-02 20:56:00" like="10" view="100" comment="34"/>
-    </div>
-</template>
+import request from '../utils/request.js'
 
-<script>
-import ArticleListItem from '../../../components/ArticleListItem.vue'
-
-export default {
-    components:{
-        ArticleListItem
-    }
+//获取文章分页数据
+export function QueryArticlePage(data){
+    return request({
+        url : "",
+        method:"post",
+        data
+    });
 }
-</script>
