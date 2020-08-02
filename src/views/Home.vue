@@ -28,8 +28,15 @@
           </el-col>
         </el-row>
       </el-header>
-      <el-main>Main</el-main>
-      <el-footer>Footer</el-footer>
+      <el-main></el-main>
+      <el-footer>
+        <div>
+          <a href="https://github.com" target="_blank">
+            <img :src="GithubImgPath"/>
+          </a>
+          <p>power by | <b><i>Vue</i></b> | <b><i>Element</i></b> | <b><i>.net Core</i></b></p>
+        </div>
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -37,9 +44,15 @@
 <script>
 // @ is an alias to /src
 import NavigationButton from "../components/NavigationButton.vue";
+const Githubimg = require('../img/github.svg');
 
 export default {
   name: "Home",
+  data:function(){
+    return{
+      GithubImgPath:Githubimg
+    }
+  },
   components: {
     NavigationButton,
   },
