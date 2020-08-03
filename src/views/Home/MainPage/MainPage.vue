@@ -18,7 +18,16 @@
 
 <template>
     <div>
-        <ArticleListItem title="Web开发中的编码问题" desc="测试文章描述" createtime="2020-08-02 20:56:00" like="10" view="100" comment="34"/>
+        <ArticleListItem v-for="item in ArticleList"
+            :key="item.articleid"
+            :title="item.title" 
+            :desc="item.desc" 
+            :createtime="item.createtime"
+            :like="item.like" 
+            :view="item.view" 
+            :comment="item.comment"
+            v-on:ArticleItemClick="ItemClickEvent"
+        />
     </div>
 </template>
 
@@ -26,6 +35,19 @@
 import ArticleListItem from '../../../components/ArticleListItem.vue'
 
 export default {
+    data:function(){
+        return{
+            ArticleList:[]
+        }
+    },
+    created:function(){
+        //调用后台接口获取文章列表
+    },
+    methods:{
+        ItemClickEvent:function(articleid){
+            console.log(articleid);
+        }
+    },
     components:{
         ArticleListItem
     }
