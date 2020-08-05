@@ -21,7 +21,7 @@ import request from '../utils/request.js'
 //获取文章分页数据
 export function QueryArticlePage(data){
     return request({
-        url : "",
+        url : "api/article/page",
         method:"post",
         data
     });

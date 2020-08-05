@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // create an axios instance
 const service = axios.create({
-    baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+    baseURL: "https://localhost:5001/", // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000 // request timeout
 })
@@ -28,7 +28,7 @@ service.interceptors.response.use(
 
         // if the custom code is not 200, it is judged as an error.
         if (res.code !== 200) {
-            window.alert(res.message);
+            window.alert(res.code + res.message);
 
             return Promise.reject(new Error(res.message || 'Error'))
         } else {

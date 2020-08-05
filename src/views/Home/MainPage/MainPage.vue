@@ -18,7 +18,7 @@
 
 <template>
     <div>
-        <ArticleListItem v-for="item in ArticleList"
+        <ArticleListItem v-for="item in articleList"
             :key="item.articleid"
             :title="item.title" 
             :desc="item.desc" 
@@ -33,19 +33,45 @@
 
 <script>
 import ArticleListItem from '../../../components/ArticleListItem.vue'
+import {QueryArticlePage} from '../../../api/article.js'
 
 export default {
     data:function(){
         return{
-            ArticleList:[]
+            articleList:[]
         }
     },
     created:function(){
-        //调用后台接口获取文章列表
+        this.getArticlePage();
     },
     methods:{
         ItemClickEvent:function(articleid){
             console.log(articleid);
+        },
+        async getArticlePage(){
+            //调用后台接口获取文章列表
+            var pageParm = new Object();
+            pageParm.Page = 1;
+            pageParm.Size = 20;
+            var req = new Object();
+            req.PageParm = pageParm;
+            req.UserId = 1;
+            var result = await QueryArticlePage(req);
+            var list = result.data;
+
+            for(let i = 0;i<list.count;i++){
+                let element = list.data[i];
+                var article = new Object();
+                article.articleid = element.id;
+                article.title = element.title;
+                article.desc = element.describe;
+                article.createtime = element.createTime;
+                article.like = element.like;
+                article.view = element.view;
+                article.comment = element.comment;
+
+                this.articleList.push(article);
+            }
         }
     },
     components:{
