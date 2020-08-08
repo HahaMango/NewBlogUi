@@ -26,6 +26,7 @@
             :like="item.like" 
             :view="item.view" 
             :comment="item.comment"
+            :articleid="item.articleid"
             v-on:ArticleItemClick="ItemClickEvent"
         />
     </div>
@@ -46,7 +47,7 @@ export default {
     },
     methods:{
         ItemClickEvent:function(articleid){
-            console.log(articleid);
+            this.$router.push("articledetail/"+articleid);
         },
         async getArticlePage(){
             //调用后台接口获取文章列表

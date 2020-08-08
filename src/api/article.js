@@ -26,3 +26,12 @@ export function QueryArticlePage(data){
         data
     });
 }
+
+//获取文章详情数据
+export function QueryArticleDetail(data){
+    return request({
+        url:"api/article/detail",
+        method:"post",
+        data
+    });
+}

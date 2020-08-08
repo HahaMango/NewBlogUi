@@ -5,6 +5,7 @@ import MainPage from '../views/Home/MainPage/MainPage.vue'
 import Explore from '../views/Home/Explore/Explore.vue'
 import OpenSource from '../views/Home/OpenSource/OpenSource.vue'
 import About from '../views/Home/AboutMe/About.vue'
+import Article from '../views/Home/MainPage/Article.vue'
 
 Vue.use(VueRouter)
 
@@ -50,6 +51,13 @@ Vue.use(VueRouter)
         component:About,
         meta:{
           title:"Chiva Studio - About"
+        }
+      },
+      {
+        path:'/articledetail/:id',
+        component:Article,
+        meta:{
+          title:"Chiva Studio - Article"
         }
       }
     ]

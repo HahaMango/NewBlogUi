@@ -26,27 +26,27 @@
           </el-col>
           <el-col :xs="6" :sm="3" :span="2">
             <div class="header-button">
-              <NavigationButton content="主页" routeUrl="home"/>
+              <NavigationButton content="主页" routeUrl="/home"/>
             </div>
           </el-col>
           <el-col :xs="6" :sm="3" :span="2">
             <div class="header-button">
-              <NavigationButton content="探索" routeUrl="explore"/>
+              <NavigationButton content="探索" routeUrl="/explore"/>
             </div>
           </el-col>
           <el-col :xs="6" :sm="3" :span="2">
             <div class="header-button">
-              <NavigationButton content="开源" routeUrl="opensource"/>
+              <NavigationButton content="开源" routeUrl="/opensource"/>
             </div>
           </el-col>
           <el-col :xs="6" :sm="3" :span="2">
             <div class="header-button">
-              <NavigationButton content="关于我" routeUrl="about"/>
+              <NavigationButton content="关于我" routeUrl="/about"/>
             </div>
           </el-col>
         </el-row>
       </el-header>
-      <el-main>
+      <el-main id="blog-content">
         <router-view></router-view>
       </el-main>
       <el-footer>
@@ -90,9 +90,16 @@ export default {
   margin: 0em auto 0em auto;
 }
 
+#blog-content{
+  padding: 0.5em;
+}
+
 @media screen and (min-width: 769px) {
   .header-title {
     text-align: left;
   }
+  #blog-content{
+  padding: 1.25em;
+}
 }
 </style>

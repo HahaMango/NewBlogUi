@@ -2,25 +2,27 @@
     <div class="article-item" v-on:click="ClickEvent">
         <h2>{{title}}</h2>
         <el-row class="article-item-date">
-            <el-col :span="12">
+            <el-col :xs="24" :sm="12">
                 {{createtime}}
             </el-col>
-            <el-col :span="1">
+            <!--小屏幕设备占位用-->
+            <el-col :xs="5" :sm="0"><div style="height:1px"></div></el-col>
+            <el-col :xs="1" :sm="1">
                 <img :src="likepath"/>
             </el-col>
-            <el-col :span="3" class="article-item-count">
+            <el-col :xs="5" :sm="3" class="article-item-count">
                 {{like}}
             </el-col>
-            <el-col :span="1">
+            <el-col :xs="1" :sm="1">
                 <img :src="viewpath"/>
             </el-col>
-            <el-col :span="3" class="article-item-count">
+            <el-col :xs="5" :sm="3" class="article-item-count">
                 {{view}}
             </el-col>
-            <el-col :span="1">
+            <el-col :xs="1" :sm="1">
                 <img :src="commentpath"/>
             </el-col>
-            <el-col :span="3" class="article-item-count">
+            <el-col :xs="5" :sm="3" class="article-item-count">
                 {{comment}}
             </el-col>
         </el-row>
@@ -75,11 +77,19 @@ export default {
 
 .article-item-date{
     font-size: 0.1em;
-    width: 40%;
+    width: 90%;
     margin: 0em auto 0em auto;
 }
 
 .article-item:hover h2{
     text-decoration: underline;
+}
+
+@media screen and (min-width: 769px) {
+.article-item-date{
+    font-size: 0.1em;
+    width: 40%;
+    margin: 0em auto 0em auto;
+}
 }
 </style>
