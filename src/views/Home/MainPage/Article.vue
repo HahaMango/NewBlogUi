@@ -46,6 +46,7 @@
         </div>
         <hr/>
         <div id="content"></div>
+        <Comment/>
     </div>
 </template>
 
@@ -57,6 +58,7 @@ const viewsvgpath = require('../../../img/view.svg');
 const commentsvgpath = require('../../../img/comment.svg');
 const timesvgpath = require('../../../img/time.svg');
 let marked = require('marked');
+import Comment from '../../../components/Comment.vue';
 
 export default {
     data:function(){
@@ -110,6 +112,9 @@ export default {
             this.createTime = rsp.createTime;
             this.createTime = this.createTime.split(' ')[0];
         }
+    },
+    components:{
+        Comment
     }
 }
 </script>
@@ -139,7 +144,7 @@ export default {
 
 @media screen and (min-width: 769px) {
 .article-content{
-    padding: 0% 5% 0% 5%;
+    padding: 0% 2% 0% 2%;
 }
 }
 </style>
