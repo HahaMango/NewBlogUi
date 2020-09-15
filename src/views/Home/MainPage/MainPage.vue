@@ -56,7 +56,7 @@ export default {
             pageParm.Size = 20;
             var req = new Object();
             req.PageParm = pageParm;
-            req.UserId = 1;
+            req.UserId = "1305520603926761472";
             var result = await QueryArticlePage(req);
             var list = result.data;
 

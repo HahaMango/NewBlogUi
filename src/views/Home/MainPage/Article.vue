@@ -44,9 +44,20 @@
             </el-col>
         </el-row>
         </div>
-        <hr/>
+        <Gl/>
         <div id="content"></div>
-        <Comment/>
+        <div style="margin-top:5em;">
+            <CommentInput/>
+        </div>
+        <div style="width:95%;margin:0px auto 0px auto;">
+            <ArticleComment v-for="item in commentList"
+                :key="item.commentId"
+                :content="item.content"
+                :userName="item.userName"
+                :createTime="item.createTime"
+                :replyCommentList="item.replyCommentList"
+            />
+        </div>
     </div>
 </template>
 
@@ -58,7 +69,9 @@ const viewsvgpath = require('../../../img/view.svg');
 const commentsvgpath = require('../../../img/comment.svg');
 const timesvgpath = require('../../../img/time.svg');
 let marked = require('marked');
-import Comment from '../../../components/Comment.vue';
+import CommentInput from '../../../components/CommentInput.vue';
+import ArticleComment from '../../../components/ArticleComment.vue';
+import Gl from '../../../components/GradientsLine.vue';
 
 export default {
     data:function(){
@@ -79,11 +92,31 @@ export default {
             likepath:likesvgpath,
             viewpath:viewsvgpath,
             commentpath:commentsvgpath,
-            timepath:timesvgpath
+            timepath:timesvgpath,
+            commentList:[
+            ]
         }
     },
     created:function(){
         this.getArticleDetail();
+        var comm = new Object();
+        comm.commentId = "1234";
+        comm.userName = "Chiva_chen";
+        comm.content = "评论测试内容1";
+        comm.createTime = "2020-09-15 22:17:00"
+        comm.replyCommentList = new Array();
+        var replyComm = new Object();
+        replyComm.commentId = "43456";
+        replyComm.userName = "测试账号2";
+        replyComm.content = "评论测试回复1";
+        replyComm.createTime = "2020-09-15 20:10:00";
+        comm.replyCommentList.push(replyComm);
+        var comm1 = new Object();
+        comm1.commentId = "34234";
+        comm1.userName = "测试账号1";
+        comm1.content = "测试内容2";
+        this.commentList.push(comm1);
+        this.commentList.push(comm);
     },
     watch :{
         content:function(val){
@@ -114,7 +147,9 @@ export default {
         }
     },
     components:{
-        Comment
+        CommentInput,
+        ArticleComment,
+        Gl
     }
 }
 </script>
