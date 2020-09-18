@@ -47,15 +47,19 @@
         <Gl/>
         <div id="content"></div>
         <div style="margin-top:5em;">
-            <CommentInput/>
+            <CommentInput v-on:submitEvent="submitCommentEvent"/>
         </div>
         <div style="width:95%;margin:0px auto 0px auto;">
             <ArticleComment v-for="item in commentList"
                 :key="item.commentId"
-                :content="item.content"
+                :commentId="item.commentId"
                 :userName="item.userName"
+                :userId="item.userId"
+                :articleId="item.articleId"
+                :content="item.content"
                 :createTime="item.createTime"
                 :replyCommentList="item.replyCommentList"
+                v-on:replyClick="commentReplyEvent"
             />
         </div>
     </div>
@@ -99,24 +103,7 @@ export default {
     },
     created:function(){
         this.getArticleDetail();
-        var comm = new Object();
-        comm.commentId = "1234";
-        comm.userName = "Chiva_chen";
-        comm.content = "评论测试内容1";
-        comm.createTime = "2020-09-15 22:17:00"
-        comm.replyCommentList = new Array();
-        var replyComm = new Object();
-        replyComm.commentId = "43456";
-        replyComm.userName = "测试账号2";
-        replyComm.content = "评论测试回复1";
-        replyComm.createTime = "2020-09-15 20:10:00";
-        comm.replyCommentList.push(replyComm);
-        var comm1 = new Object();
-        comm1.commentId = "34234";
-        comm1.userName = "测试账号1";
-        comm1.content = "测试内容2";
-        this.commentList.push(comm1);
-        this.commentList.push(comm);
+        this.getCommentList();
     },
     watch :{
         content:function(val){
@@ -144,6 +131,17 @@ export default {
             this.like = rsp.like;
             this.createTime = rsp.createTime;
             this.createTime = this.createTime.split(' ')[0];
+        },
+        async getCommentList(){
+
+        },
+        commentReplyEvent:function(commentId,userName,userId){
+            console.log(commentId);
+            console.log(userName);
+            console.log(userId);
+        },
+        submitCommentEvent:function(content){
+            console.log(content);
         }
     },
     components:{

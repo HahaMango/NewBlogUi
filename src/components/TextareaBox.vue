@@ -1,10 +1,24 @@
 <template>
-    <textarea class="mtextarea"></textarea>
+    <textarea class="mtextarea" v-model="content" v-on:keyup="onchangeEvent"></textarea>
 </template>
 
 <script>
 export default {
-    props:['text']
+    data:function(){
+        return{
+            content:''
+        }
+    },
+    props:['initText'],
+    created:function(){
+        this.content = this.initText;
+    },
+    methods:{
+        onchangeEvent:function(){
+            var text = document.getElementsByClassName('mtextarea')[0].value;
+            this.$emit('onchangeEvent',text);
+        }
+    }
 }
 </script>
 

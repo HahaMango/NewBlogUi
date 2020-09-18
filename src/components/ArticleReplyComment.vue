@@ -2,25 +2,36 @@
     <div class="article-reply-comment">
         <el-row>
             <el-col :span="23">
-                <p>{{userName}}：{{content}}</p>
+                <p>{{userName}}：<span v-if="isReply" class="sub-reply-comment">@{{replyUserName}} </span>{{content}}</p>
             </el-col>
             <el-col :span="1">
-                <p><img :src="likepath"/></p>
+                <p v-on:click="replyClick"><img :src="replypath"/></p>
             </el-col>
         </el-row>
     </div>
 </template>
 
 <script>
-const likesvgpath = require('../img/like.svg');
+import { isEmptyString } from '../utils/utils';
+const replysvgpath = require('../img/reply.svg');
 
 export default {
     data:function(){
         return {
-            likepath:likesvgpath
+            replypath:replysvgpath
         }
     },
-    props:['commentId','userName','userId','articleId','content','like','reply','createTime','replyCommentId','replyUserName','replyUserId']
+    props:['commentId','userName','userId','articleId','content','like','reply','createTime','replyCommentId','replyUserName','replyUserId'],
+    methods:{
+        replyClick:function(){
+            this.$emit('subReplyClick',this.commentId,this.userName,this.userId);
+        }
+    },
+    computed:{
+        isReply:function(){
+            return !isEmptyString(this.replyCommentId);
+        }
+    }
 }
 </script>
 
@@ -35,5 +46,9 @@ export default {
 
 .article-reply-comment img{
     cursor: pointer;
+}
+
+.sub-reply-comment{
+    color: gray;
 }
 </style>

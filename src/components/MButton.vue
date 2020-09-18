@@ -1,10 +1,15 @@
 <template>
-    <button class="mbutton">{{text}}</button>
+    <button class="mbutton" v-on:click="mbuttonClickEvent">{{text}}</button>
 </template>
 
 <script>
 export default {
-    props:['text']
+    props:['text'],
+    methods:{
+        mbuttonClickEvent:function(){
+            this.$emit('mbuttonClickEvent');
+        }
+    }
 }
 </script>
 
