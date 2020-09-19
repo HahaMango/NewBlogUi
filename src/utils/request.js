@@ -1,16 +1,22 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
+import { isEmptyString } from '../utils/utils.js';
 
 // create an axios instance
 const service = axios.create({
     baseURL: "http://test.api.hahamango.cn/", // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
-    timeout: 5000 // request timeout
+    timeout: 10000 // request timeout
 })
 
 // request interceptor
 service.interceptors.request.use(
     config => {
         // do something before request is sent
+        var token = Cookies.get("token");
+        if(!isEmptyString(token)){
+            config.headers['Authorization'] = 'Bearer ' + token;
+        }
         return config
     },
     error => {

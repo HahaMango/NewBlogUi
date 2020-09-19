@@ -21,7 +21,34 @@ import request from '../utils/request.js'
 //获取评论分页数据
 export function QueryCommentPage(data){
     return request({
-        url : "api/blog/article/page",
+        url : "api/blog/comment/page",
+        method:"post",
+        data
+    });
+}
+
+//获取评论回复分页数据
+export function QuerySubCommentPage(data){
+    return request({
+        url : "api/blog/comment/subpage",
+        method:"post",
+        data
+    });
+}
+
+//添加评论
+export function AddComment(data){
+    return request({
+        url : "api/blog/comment/add",
+        method:"post",
+        data
+    });
+}
+
+//添加回复评论
+export function AddReplyComment(data){
+    return request({
+        url : "api/blog/comment/addreply",
         method:"post",
         data
     });

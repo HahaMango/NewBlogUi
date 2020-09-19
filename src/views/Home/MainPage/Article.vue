@@ -47,7 +47,7 @@
         <Gl/>
         <div id="content"></div>
         <div style="margin-top:5em;">
-            <CommentInput v-on:submitEvent="submitCommentEvent"/>
+            <CommentInput v-on:submitEvent="submitCommentEvent" :initText="commentContent" :initUserName="initUserName"/>
         </div>
         <div style="width:95%;margin:0px auto 0px auto;">
             <ArticleComment v-for="item in commentList"
@@ -67,6 +67,8 @@
 
 <script>
 import {QueryArticleDetail} from '../../../api/article.js'
+import {QueryCommentPage} from '../../../api/comment.js'
+import {AddComment} from '../../../api/comment.js'
 const authorsvgpath = require('../../../img/author.svg');
 const likesvgpath = require('../../../img/like.svg');
 const viewsvgpath = require('../../../img/view.svg');
@@ -76,7 +78,7 @@ let marked = require('marked');
 import CommentInput from '../../../components/CommentInput.vue';
 import ArticleComment from '../../../components/ArticleComment.vue';
 import Gl from '../../../components/GradientsLine.vue';
-
+let i =0;
 export default {
     data:function(){
         return {
@@ -98,7 +100,9 @@ export default {
             commentpath:commentsvgpath,
             timepath:timesvgpath,
             commentList:[
-            ]
+            ],
+            commentContent:'',
+            initUserName:''
         }
     },
     created:function(){
@@ -114,7 +118,7 @@ export default {
     methods:{
         async getArticleDetail(){
             var req = new Object();
-            var id = this.$route.params.id
+            var id = this.$route.params.id;
             req.articleId = id;
 
             var result = await QueryArticleDetail(req);
@@ -133,15 +137,76 @@ export default {
             this.createTime = this.createTime.split(' ')[0];
         },
         async getCommentList(){
+            var req = new Object();
+            var id = this.$route.params.id;
+            req.articleId = id;
+            req.pageParm = new Object();
+            req.pageParm.page = 1;
+            req.pageParm.size = 20;
 
+            var result = await QueryCommentPage(req);
+            var rsp = result.data;
+            for(var i = 0;i<rsp.data.length;i++){
+                var rspComment = rsp.data[i];
+                var comment = new Object();
+                comment.commentId = rspComment.id;
+                comment.userName = rspComment.userName;
+                comment.userId = rspComment.userId;
+                comment.articleId = rspComment.articleId;
+                comment.content = rspComment.content;
+                comment.createTime = rspComment.createTime;
+                comment.replyCommentList = new Array();
+                var rspSubComment = rspComment.FirstReplyComment;
+                if(rspSubComment != null && typeof obj != "undefined")
+                {
+                    var subComment = new Object();
+                    subComment.commentId = rspSubComment.id;
+                    subComment.userName = rspSubComment.userName;
+                    subComment.userId = rspSubComment.userId;
+                    subComment.articleId = rspSubComment.articleId;
+                    subComment.content = rspSubComment.content;
+                    subComment.createTime = rspSubComment.createTime;
+                    subComment.replyCommentId = rspSubComment.subReplyCommentId;
+                    subComment.replyUserName = rspSubComment.subReplyUserName;
+                    subComment.replyUserId = rspSubComment.subReplyUserId;
+                    comment.replyCommentList.push(subComment);
+                }
+                this.commentList.push(comment);
+            }
         },
         commentReplyEvent:function(commentId,userName,userId){
             console.log(commentId);
             console.log(userName);
             console.log(userId);
         },
-        submitCommentEvent:function(content){
-            console.log(content);
+        async submitCommentEvent(content,userName){
+            //添加评论
+            var req = new Object();
+            req.articleId = this.id;
+            req.userName = userName;
+            req.content = content;
+            var result = await AddComment(req);
+            if(result.code != 200){
+                return;
+            }
+            var addComment = new Object();
+            addComment.commentId = result.data.id;
+            addComment.userName = result.data.userName;
+            addComment.userId = result.data.userId;
+            addComment.articleId = result.data.articleId;
+            addComment.content = result.data.content;
+            addComment.createTime = result.data.createTime;
+            addComment.replyCommentList = new Array();
+            if(i%2==0){
+                this.commentContent = undefined;
+                this.initUserName = undefined;
+            }else{
+                this.commentContent = '';
+                this.initUserName = '';
+            }
+            i++;
+            this.commentList.length.unshift(addComment);
+            this.comment++;
         }
     },
     components:{
