@@ -17,7 +17,7 @@
                         <Mtext class="comment-text" :initText="initUserName" v-on:onchangeEvent="mtextChangeEvent"/>
                     </el-col>
                     <el-col :span="3">
-                        <Mbutton text="评论" class="comment-button" v-on:mbuttonClickEvent="submitEvent"/>
+                        <Mbutton text="评论" class="comment-button" v-on:mbuttonClickEvent="submitEvent" :enable="true"/>
                     </el-col>
                 </el-row>
             </el-col>

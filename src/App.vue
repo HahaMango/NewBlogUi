@@ -23,6 +23,15 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #c5c5c5;
-  margin-top: 1.3em;
+}
+
+html,body{
+  height: 100%;
+  width: 100%;
+}
+
+body{
+  padding: 0em 0em 0em 0em;
+  margin: 0px;
 }
 </style>

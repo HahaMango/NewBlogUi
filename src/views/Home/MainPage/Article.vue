@@ -45,7 +45,7 @@
         </el-row>
         </div>
         <Gl/>
-        <div id="content"></div>
+        <div id="content" class="marked-div"></div>
         <div style="margin-top:5em;">
             <CommentInput v-on:submitEvent="submitCommentEvent" :initText="commentContent" :initUserName="initUserName"/>
         </div>
@@ -78,6 +78,7 @@ let marked = require('marked');
 import CommentInput from '../../../components/CommentInput.vue';
 import ArticleComment from '../../../components/ArticleComment.vue';
 import Gl from '../../../components/GradientsLine.vue';
+import { isEmptyString } from '../../../utils/utils.js';
 let i =0;
 export default {
     data:function(){
@@ -181,6 +182,10 @@ export default {
         },
         async submitCommentEvent(content,userName){
             //添加评论
+            if(isEmptyString(content) || isEmptyString(userName)){
+                window.alert("请填写评论内容和用户名");
+                return;
+            }
             var req = new Object();
             req.articleId = this.id;
             req.userName = userName;
@@ -205,7 +210,7 @@ export default {
                 this.initUserName = '';
             }
             i++;
-            this.commentList.length.unshift(addComment);
+            this.commentList.unshift(addComment);
             this.comment++;
         }
     },

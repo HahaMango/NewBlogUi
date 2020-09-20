@@ -1,13 +1,18 @@
 <template>
-    <button class="mbutton" v-on:click="mbuttonClickEvent">{{text}}</button>
+    <button class="mbutton" :class="[enable ? 'mbutton-acvite':'mbutton-disable']" v-on:click="mbuttonClickEvent">{{text}}</button>
 </template>
 
 <script>
 export default {
-    props:['text'],
+    props:{
+        text:String,
+        enable:Boolean
+    },
     methods:{
         mbuttonClickEvent:function(){
-            this.$emit('mbuttonClickEvent');
+            if(this.enable){
+                this.$emit('mbuttonClickEvent');
+            }
         }
     }
 }
@@ -20,15 +25,23 @@ export default {
     border: none;
     padding: 0.5em 1em 0.5em 1em;
     outline: none;
-    cursor: pointer;
 }
 
-.mbutton:hover{
+.mbutton-acvite:hover{
     background-color: #5f5f5f;
 }
 
-.mbutton:focus{
+.mbutton-acvite:focus{
     background-color: #3b3b3b;
     box-shadow: 0 0 0 0.2em #585858;
+}
+
+.mbutton-disable{
+    background-color: rgb(60, 64, 0);
+    box-shadow: 0 0 0 0.2em #5d6300;
+}
+
+.mbutton-acvite{
+    cursor: pointer;
 }
 </style>

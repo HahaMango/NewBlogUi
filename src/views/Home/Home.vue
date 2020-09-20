@@ -18,46 +18,48 @@
 
 <template>
   <div>
-    <el-container class="blog-container">
-      <el-header class="blog-header">
-        <el-row>
-          <el-col :xs="24" :sm="12" :span="16">
+    <el-scrollbar id="mscrollbar" :wrapStyle="[{'overflow-x':'hidden'}]">
+      <el-container class="blog-container">
+        <el-header class="blog-header">
+          <el-row>
+            <el-col :xs="24" :sm="12" :span="16">
             <div class="header-title">Chiva Studio</div>
-          </el-col>
-          <el-col :xs="6" :sm="3" :span="2">
-            <div class="header-button">
-              <NavigationButton content="主页" routeUrl="/home"/>
-            </div>
-          </el-col>
-          <el-col :xs="6" :sm="3" :span="2">
-            <div class="header-button">
-              <NavigationButton content="探索" routeUrl="/explore"/>
-            </div>
-          </el-col>
-          <el-col :xs="6" :sm="3" :span="2">
-            <div class="header-button">
-              <NavigationButton content="开源" routeUrl="/opensource"/>
-            </div>
-          </el-col>
-          <el-col :xs="6" :sm="3" :span="2">
-            <div class="header-button">
-              <NavigationButton content="关于我" routeUrl="/about"/>
-            </div>
-          </el-col>
-        </el-row>
-      </el-header>
-      <el-main id="blog-content">
-        <router-view></router-view>
-      </el-main>
-      <el-footer>
-        <div>
-          <a href="https://github.com/HahaMango/NewBlogUi" target="_blank">
-            <img :src="GithubImgPath"/>
-          </a>
-          <p>Power by <b><i>Vue</i></b> / <b><i>Element</i></b> ---- Service power by <b><i>.net Core</i></b></p>
-        </div>
-      </el-footer>
-    </el-container>
+            </el-col>
+            <el-col :xs="6" :sm="3" :span="2">
+              <div class="header-button">
+                <NavigationButton content="主页" routeUrl="/home"/>
+              </div>
+            </el-col>
+            <el-col :xs="6" :sm="3" :span="2">
+              <div class="header-button">
+                <NavigationButton content="探索" routeUrl="/explore"/>
+              </div>
+            </el-col>
+            <el-col :xs="6" :sm="3" :span="2">
+              <div class="header-button">
+                <NavigationButton content="开源" routeUrl="/opensource"/>
+              </div>
+            </el-col>
+            <el-col :xs="6" :sm="3" :span="2">
+              <div class="header-button">
+                <NavigationButton content="关于我" routeUrl="/about"/>
+              </div>
+            </el-col>
+          </el-row>
+        </el-header>
+        <el-main id="blog-content">
+          <router-view></router-view>
+        </el-main>
+        <el-footer>
+          <div>
+            <a href="https://github.com/HahaMango/NewBlogUi" target="_blank">
+              <img :src="GithubImgPath"/>
+            </a>
+            <p>Power by <b><i>Vue</i></b> / <b><i>Element</i></b> ---- Service power by <b><i>.net Core</i></b></p>
+          </div>
+        </el-footer>
+      </el-container>
+    </el-scrollbar>
   </div>
 </template>
 
@@ -76,6 +78,11 @@ export default {
   components: {
     NavigationButton,
   },
+  mounted:function(){
+    var d = window.document.getElementById("mscrollbar");
+    var height = document.body.clientHeight;
+    d.style.height = height + 'px';
+  }
 };
 </script>
 
@@ -87,7 +94,7 @@ export default {
 
 .blog-container {
   max-width: 1000px;
-  margin: 0em auto 0em auto;
+  margin: 1.5em auto 1.5em auto;
 }
 
 #blog-content{
@@ -101,5 +108,42 @@ export default {
   #blog-content{
   padding: 1.25em;
 }
+}
+
+/*
+ * markdown 全局样式
+*/
+.marked-div a{
+  text-decoration: none;
+  color: #848484;
+}
+
+.marked-div hr{
+  border-color: #777777;
+}
+
+.marked-div p code{
+  background-color: #444444;
+  border-radius: 0.2em;
+  padding: 0.2em 0.2em 0.2em 0.2em;
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+}
+
+.marked-div pre{
+  background-color: #444444;
+  border-radius: 0.2em;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.marked-div pre code {
+  font-family: Consolas;
+  font-size: 1em;
+}
+
+body{
+  height: 100%;
 }
 </style>
