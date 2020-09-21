@@ -41,10 +41,10 @@ export default {
     props:['commentId','userName','userId','articleId','content','like','reply','createTime','replyCommentList'],
     methods:{
         replyClick:function(){
-            this.$emit('replyClick',this.commentId,this.userName,this.userId);
+            this.$emit('replyClick',this.commentId,this.userName,this.userId,null);
         },
         subReplyClick:function(commentId,userName,userId){
-            this.$emit('replyClick',commentId,userName,userId);
+            this.$emit('replyClick',commentId,userName,userId,this.replyCommentList);
         }
     },
     components:{

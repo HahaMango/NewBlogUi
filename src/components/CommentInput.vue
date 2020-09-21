@@ -3,7 +3,7 @@
         <el-row>
             <el-col :span="5"><div style="height:1px"></div></el-col>
             <el-col :span="14" class="comment-area">
-                <Mtextarea class="comment-textarea" :initText="initText" v-on:onchangeEvent="mtextareaChangeEvent"/>
+                <Mtextarea class="comment-textarea" :initText="initText" v-on:onchangeEvent="mtextareaChangeEvent" v-on:clearInputEvent="mtextareaClearEvent"/>
                 <el-row>
                     <el-col :span="8">
                         <div style="height:1px"></div>
@@ -51,6 +51,9 @@ export default {
         },
         mtextChangeEvent:function(object){
             this.userName = object;
+        },
+        mtextareaClearEvent:function(){
+            this.$emit("clearInputEvent");
         }
     },
     components:{

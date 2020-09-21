@@ -9,6 +9,9 @@ export default {
         onchangeEvent:function(){
             var text = document.getElementsByClassName('mtextarea')[0].value;
             this.$emit('onchangeEvent',text);
+            if(text == ''){
+                this.$emit('clearInputEvent');
+            }
         }
     }
 }

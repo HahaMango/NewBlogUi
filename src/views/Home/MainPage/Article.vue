@@ -47,7 +47,7 @@
         <Gl/>
         <div id="content" class="marked-div"></div>
         <div style="margin-top:5em;">
-            <CommentInput v-on:submitEvent="submitCommentEvent" :initText="commentContent" :initUserName="initUserName"/>
+            <CommentInput v-on:submitEvent="submitCommentEvent" v-on:clearInputEvent="clearInputEvent" :initText="commentContent" :initUserName="initUserName"/>
         </div>
         <div style="width:95%;margin:0px auto 0px auto;">
             <ArticleComment v-for="item in commentList"
@@ -62,6 +62,9 @@
                 v-on:replyClick="commentReplyEvent"
             />
         </div>
+        <div>
+            <LoadNextButton :width="200" :enable="commentHasNext" :text="commentHasNext ? '🔽加载更多！':'没有更多了😯...' " v-on:loadNextClick="loadNextEvent"/>
+        </div> 
     </div>
 </template>
 
@@ -77,9 +80,10 @@ const timesvgpath = require('../../../img/time.svg');
 let marked = require('marked');
 import CommentInput from '../../../components/CommentInput.vue';
 import ArticleComment from '../../../components/ArticleComment.vue';
+import LoadNextButton from '../../../components/LoadNextButton.vue';
 import Gl from '../../../components/GradientsLine.vue';
 import { isEmptyString } from '../../../utils/utils.js';
-let i =0;
+
 export default {
     data:function(){
         return {
@@ -103,12 +107,21 @@ export default {
             commentList:[
             ],
             commentContent:'',
-            initUserName:''
+            initUserName:'',
+            //评论变量
+            replyFlag:false,
+            replyCommentId:null,
+            tempReplyCommentList:null,
+            commentHasNext:true,
+            commentDefalutPage:1,
+            commentDefalutSize:20,
+            currentCommentPage:1,
+            currentCommentSize:20
         }
     },
     created:function(){
         this.getArticleDetail();
-        this.getCommentList();
+        this.getCommentList(this.commentDefalutPage,this.commentDefalutSize);
     },
     watch :{
         content:function(val){
@@ -117,6 +130,7 @@ export default {
         }
     },
     methods:{
+        //加载文章详情
         async getArticleDetail(){
             var req = new Object();
             var id = this.$route.params.id;
@@ -137,13 +151,14 @@ export default {
             this.createTime = rsp.createTime;
             this.createTime = this.createTime.split(' ')[0];
         },
-        async getCommentList(){
+        //加载评论列表
+        async getCommentList(page,size){
             var req = new Object();
             var id = this.$route.params.id;
             req.articleId = id;
             req.pageParm = new Object();
-            req.pageParm.page = 1;
-            req.pageParm.size = 20;
+            req.pageParm.page = page;
+            req.pageParm.size = size;
 
             var result = await QueryCommentPage(req);
             var rsp = result.data;
@@ -174,50 +189,124 @@ export default {
                 }
                 this.commentList.push(comment);
             }
+            this.currentCommentPage = rsp.page;
+            this.currentCommentSize = rsp.size;
+            if(this.commentList.length >= rsp.count){
+                this.commentHasNext = false;
+            }
         },
-        commentReplyEvent:function(commentId,userName,userId){
-            console.log(commentId);
-            console.log(userName);
+        //点击回复评论按钮事件
+        commentReplyEvent:function(commentId,userName,userId,currentCommentList){
+            if(this.replyFlag == true){
+                this.commentContent = '';
+            }
+            this.commentContent = '@' + userName + ' ';
+            this.replyFlag = true;
+            this.replyCommentId = commentId;
+            this.tempReplyCommentList = currentCommentList;
             console.log(userId);
+            console.log(commentId);
         },
+        //添加评论
         async submitCommentEvent(content,userName){
-            //添加评论
             if(isEmptyString(content) || isEmptyString(userName)){
                 window.alert("请填写评论内容和用户名");
                 return;
             }
-            var req = new Object();
-            req.articleId = this.id;
-            req.userName = userName;
-            req.content = content;
-            var result = await AddComment(req);
-            if(result.code != 200){
-                return;
+            if(!this.replyFlag){
+                var req = new Object();
+                req.articleId = this.id;
+                req.userName = userName;
+                req.content = content;
+                var result = await AddComment(req);
+                if(result.code != 200){
+                    return;
+                }
+                var addComment = new Object();
+                addComment.commentId = result.data.id;
+                addComment.userName = result.data.userName;
+                addComment.userId = result.data.userId;
+                addComment.articleId = result.data.articleId;
+                addComment.content = result.data.content;
+                addComment.createTime = result.data.createTime;
+                addComment.replyCommentList = new Array();
+                if(i%2==0){
+                    this.commentContent = undefined;
+                    this.initUserName = undefined;
+                }else{
+                    this.commentContent = '';
+                    this.initUserName = '';
+                }
+                i++;
+                this.commentList.unshift(addComment);
             }
-            var addComment = new Object();
-            addComment.commentId = result.data.id;
-            addComment.userName = result.data.userName;
-            addComment.userId = result.data.userId;
-            addComment.articleId = result.data.articleId;
-            addComment.content = result.data.content;
-            addComment.createTime = result.data.createTime;
-            addComment.replyCommentList = new Array();
-            if(i%2==0){
-                this.commentContent = undefined;
-                this.initUserName = undefined;
-            }else{
-                this.commentContent = '';
-                this.initUserName = '';
+            else{
+                var replyReq = new Object();
+                replyReq.articleId = this.id;
+                replyReq.userName = userName;
+                replyReq.content = content;
+                replyReq.replyCommentId = this.replyCommentId;
+                var replyResult = await AddComment(replyReq);
+                var replyRsp = replyResult.data;
+                if(replyResult.code != 200){
+                    return;
+                }
+                if(this.tempReplyCommentList == null){
+                    //回复主评论
+                    for(var i = 0; i < this.commentList.length;i++){
+                        var c = this.commentList[i];
+                        if(c.commentId == this.replyCommentId){
+                            var replyComment = new Object();
+                            replyComment.commentId = replyRsp.id;
+                            replyComment.userName = replyRsp.userName;
+                            replyComment.userId = replyRsp.userId;
+                            replyComment.articleId = replyRsp.articleId;
+                            replyComment.content = replyRsp.content;
+                            replyComment.like = replyRsp.like;
+                            replyComment.reply = replyRsp.reply;
+                            replyComment.createTime = replyRsp.createTime;
+                            replyComment.replyCommentId = replyRsp.subReplyCommentId;
+                            replyComment.replyUserName = replyRsp.subReplyUserName;
+                            replyComment.replyUserId = replyRsp.subReplyCommentId;
+                            c.replyCommentList.unshift(replyComment);
+                            break;
+                        }
+                    }
+                }else{
+                    //回复子评论
+                    var replySubComment = new Object();
+                    replySubComment.commentId = replyRsp.id;
+                    replySubComment.userName = replyRsp.userName;
+                    replySubComment.userId = replyRsp.userId;
+                    replySubComment.articleId = replyRsp.articleId;
+                    replySubComment.content = replyRsp.content;
+                    replySubComment.like = replyRsp.like;
+                    replySubComment.reply = replyRsp.reply;
+                    replySubComment.createTime = replyRsp.createTime;
+                    replySubComment.replyCommentId = replyRsp.subReplyCommentId;
+                    replySubComment.replyUserName = replyRsp.subReplyUserName;
+                    replySubComment.replyUserId = replyRsp.subReplyCommentId;
+                    this.tempReplyCommentList.unshift(replySubComment);
+                }
             }
-            i++;
-            this.commentList.unshift(addComment);
             this.comment++;
+        },
+        //清空评论输入框事件
+        clearInputEvent:function(){
+            this.replyFlag = false;
+            this.replyCommentId = null;
+            this.tempReplyCommentList = null;
+        },
+        //加载主评论
+        loadNextEvent:function(){
+            window.alert("加载更多");
         }
     },
     components:{
         CommentInput,
         ArticleComment,
-        Gl
+        Gl,
+        LoadNextButton
     }
 }
 </script>
