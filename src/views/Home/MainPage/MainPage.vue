@@ -45,6 +45,8 @@
 import ArticleListItem from '../../../components/ArticleListItem.vue'
 import {QueryArticlePage} from '../../../api/article.js'
 import Mbutton from '../../../components/MButton.vue'
+import { ToBottomEventSetting } from '../../../utils/utils.js';
+import { RemoveBottomEventSetting } from '../../../utils/utils.js';
 
 export default {
     data:function(){
@@ -60,6 +62,16 @@ export default {
     },
     created:function(){
         this.getArticlePage(this.defaultPage,this.defalutSize);
+    },
+    mounted:function(){
+        ToBottomEventSetting(function(){
+            if(this.hasNext){
+                this.getArticlePage(++(this.currentPage),this.defalutSize);
+            }
+        });
+    },
+    destroyed:function(){
+        RemoveBottomEventSetting();
     },
     methods:{
         ItemClickEvent:function(articleid){

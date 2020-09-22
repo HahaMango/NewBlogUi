@@ -83,6 +83,8 @@ import ArticleComment from '../../../components/ArticleComment.vue';
 import LoadNextButton from '../../../components/LoadNextButton.vue';
 import Gl from '../../../components/GradientsLine.vue';
 import { isEmptyString } from '../../../utils/utils.js';
+import { ToBottomEventSetting } from '../../../utils/utils.js';
+import { RemoveBottomEventSetting } from '../../../utils/utils.js';
 
 export default {
     data:function(){
@@ -122,6 +124,16 @@ export default {
     created:function(){
         this.getArticleDetail();
         this.getCommentList(this.commentDefalutPage,this.commentDefalutSize);
+    },
+    mounted:function(){
+        ToBottomEventSetting(function(){
+            if(this.commentHasNext){
+                this.getCommentList(++this.currentCommentPage,this.commentDefalutSize);
+            }
+        });
+    },
+    destroyed:function(){
+        RemoveBottomEventSetting();
     },
     watch :{
         content:function(val){
