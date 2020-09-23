@@ -35,3 +35,12 @@ export function QueryArticleDetail(data){
         data
     });
 }
+
+//增加文章浏览数
+export function IncArticleViewCount(data){
+    return request({
+        url:"api/blog/article/incview",
+        method:"post",
+        data
+    });
+}

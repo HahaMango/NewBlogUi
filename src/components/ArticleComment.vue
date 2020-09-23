@@ -25,17 +25,33 @@
                 v-on:subReplyClick="subReplyClick"
             />
         </div>
+        <div>
+            <LoadNextButton v-if="reply > 1" :width="200" :enable="hasNextReply" :text="hasNextReply ? '▼加载更多评论！':'没有更多了...' " v-on:loadNextClick="loadNextEvent"/>
+        </div>
     </div>
 </template>
 
 <script>
 const replysvgpath = require('../img/reply.svg');
 import ArticleReplyComment from './ArticleReplyComment.vue';
+import LoadNextButton from '../components/LoadNextButton.vue';
 
 export default {
     data:function(){
         return {
-            replypath:replysvgpath
+            replypath:replysvgpath,
+            hasNextReply:true,
+            defaultPage:1,
+            defaultSize:20,
+            currentPage:1,
+            currentSize:20
+        }
+    },
+    mounted:function(){
+        if(this.reply > 1){
+            this.hasNextReply = true;
+        }else{
+            this.hasNextReply = false;
         }
     },
     props:['commentId','userName','userId','articleId','content','like','reply','createTime','replyCommentList'],
@@ -45,10 +61,14 @@ export default {
         },
         subReplyClick:function(commentId,userName,userId){
             this.$emit('replyClick',commentId,userName,userId,this.replyCommentList);
+        },
+        loadNextEvent:function(){
+            this.$emit('replyCommentLoadNext',this);
         }
     },
     components:{
-        ArticleReplyComment
+        ArticleReplyComment,
+        LoadNextButton
     }
 }
 </script>

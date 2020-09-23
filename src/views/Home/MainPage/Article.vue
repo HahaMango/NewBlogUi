@@ -60,6 +60,7 @@
                 :createTime="item.createTime"
                 :replyCommentList="item.replyCommentList"
                 v-on:replyClick="commentReplyEvent"
+                v-on:replyCommentLoadNext="replyLoadNextEvent"
             />
         </div>
         <div>
@@ -70,7 +71,9 @@
 
 <script>
 import {QueryArticleDetail} from '../../../api/article.js'
+import {IncArticleViewCount} from '../../../api/article.js'
 import {QueryCommentPage} from '../../../api/comment.js'
+import {QuerySubCommentPage} from '../../../api/comment.js'
 import {AddComment} from '../../../api/comment.js'
 const authorsvgpath = require('../../../img/author.svg');
 const likesvgpath = require('../../../img/like.svg');
@@ -131,6 +134,8 @@ export default {
                 this.getCommentList(++this.currentCommentPage,this.commentDefalutSize);
             }
         });
+
+        this.incArticleVie();
     },
     destroyed:function(){
         RemoveBottomEventSetting();
@@ -309,9 +314,49 @@ export default {
             this.replyCommentId = null;
             this.tempReplyCommentList = null;
         },
-        //加载主评论
-        loadNextEvent:function(){
-            window.alert("加载更多");
+        //加载子评论
+        async replyLoadNextEvent(articleReplyComment){
+            var req = new Object();
+            req.commentId = articleReplyComment.commentId;
+            req.pageParm = new Object();
+            req.pageParm.page = ++articleReplyComment.currentPage;
+            req.pageParm.size = articleReplyComment.defaultSize;
+
+            var result = await QuerySubCommentPage(req);
+            var rsp = result.data;
+            
+            for(var i = 0;i<rsp.data.length;i++){
+                var resultReplyComment = rsp.data[i];
+                var replyComment = new Object();
+                replyComment.commentId = resultReplyComment.id;
+                replyComment.userName = resultReplyComment.userName;
+                replyComment.userId = resultReplyComment.userId;
+                replyComment.articleId = resultReplyComment.articleId;
+                replyComment.content = resultReplyComment.content;
+                replyComment.createTime = resultReplyComment.createTime;
+                replyComment.replyCommentId = resultReplyComment.subReplyCommentId;
+                replyComment.replyUserName = resultReplyComment.subReplyUserName;
+                replyComment.replyUserId = resultReplyComment.subReplyUserId;
+
+                articleReplyComment.replyCommentList.push(replyComment);
+            }
+
+            articleReplyComment.currentPage = rsp.page;
+            articleReplyComment.currentSize = rsp.size;
+            if(articleReplyComment.replyCommentList.length >= rsp.count){
+                articleReplyComment.hasNextReply = false;
+            }
+        },
+        //文章阅读数
+        async incArticleVie(){
+            var req = new Object();
+            var id = this.$route.params.id;
+            req.articleId = id;
+
+            var result = await IncArticleViewCount(req);
+            if(result.code == 200){
+                this.view++;
+            }
         }
     },
     components:{
