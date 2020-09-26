@@ -113,6 +113,10 @@ export default {
 /*
  * markdown 全局样式
 */
+.marked-div{
+  text-align: left;
+}
+
 .marked-div a{
   text-decoration: none;
   color: #848484;
@@ -133,14 +137,44 @@ export default {
 .marked-div pre{
   background-color: #444444;
   border-radius: 0.2em;
+  padding-top: 1em;
   padding-bottom: 1em;
   padding-left: 1em;
   padding-right: 1em;
+  overflow: auto;
 }
 
 .marked-div pre code {
   font-family: Consolas;
   font-size: 1em;
+}
+
+.marked-div img{
+  max-width: 90%;
+}
+
+.marked-div blockquote{
+  padding: 0em 0.5em 0em 0.5em;
+  border-left-style: solid;
+  border-left-color: #777777;
+}
+
+.marked-div table{
+  border-spacing: 0;
+  border-top: 0.1em solid #777777;
+  border-left: 0.1em solid #777777;
+}
+
+.marked-div table td{
+  padding: 0.3em 0.5em 0.3em 0.5em;
+  border-bottom: 0.1em solid #777777;
+  border-right: 0.1em solid #777777;
+}
+
+.marked-div table th{
+  padding: 0.3em 0.5em 0.3em 0.5em;
+  border-bottom: 0.1em solid #777777;
+  border-right: 0.1em solid #777777;
 }
 
 body{

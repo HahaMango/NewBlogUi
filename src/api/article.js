@@ -44,3 +44,12 @@ export function IncArticleViewCount(data){
         data
     });
 }
+
+//添加文章
+export function AddArticle(data){
+    return request({
+        url:"api/blog/admin/article/add",
+        method:"post",
+        data
+    });
+}

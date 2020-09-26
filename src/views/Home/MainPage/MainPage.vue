@@ -48,14 +48,16 @@ import Mbutton from '../../../components/MButton.vue'
 import { ToBottomEventSetting } from '../../../utils/utils.js';
 import { RemoveBottomEventSetting } from '../../../utils/utils.js';
 
+let p = null;
+
 export default {
     data:function(){
         return{
             articleList:[],
             defaultPage:1,
-            defalutSize:20,
+            defalutSize:10,
             currentPage : 1,
-            currentSize : 20,
+            currentSize : 10,
             //分页是否存在下一页
             hasNext:true
         }
@@ -64,9 +66,10 @@ export default {
         this.getArticlePage(this.defaultPage,this.defalutSize);
     },
     mounted:function(){
+        p = this;
         ToBottomEventSetting(function(){
-            if(this.hasNext){
-                this.getArticlePage(++(this.currentPage),this.defalutSize);
+            if(p.hasNext){
+                p.getArticlePage(++(p.currentPage),p.defalutSize);
             }
         });
     },

@@ -17,5 +17,17 @@
 /*--------------------------------------------------------------------------*/
 
 <template>
-    <div>Test OpenSource</div>
+    <div>
+        <Mbutton text="😊即将开放..." :enable="false"/>
+    </div>
 </template>
+
+<script>
+import Mbutton from '../../../components/MButton.vue'
+
+export default {
+    components:{
+        Mbutton
+    }
+}
+</script>

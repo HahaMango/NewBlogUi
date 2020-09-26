@@ -6,6 +6,7 @@ import Explore from '../views/Home/Explore/Explore.vue'
 import OpenSource from '../views/Home/OpenSource/OpenSource.vue'
 import About from '../views/Home/AboutMe/About.vue'
 import Article from '../views/Home/MainPage/Article.vue'
+//import AddArticle from '../views/Home/MainPage/AddArticle.vue'
 
 Vue.use(VueRouter)
 
@@ -59,7 +60,16 @@ Vue.use(VueRouter)
         meta:{
           title:"Chiva Studio - Article"
         }
+      },
+      /*
+      {
+        path:'/addarticle',
+        component:AddArticle,
+        meta:{
+          title:"Chiva Studio - AddArticle"
+        }
       }
+      */
     ]
   }
 ]

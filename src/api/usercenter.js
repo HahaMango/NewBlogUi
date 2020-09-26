@@ -16,18 +16,13 @@
 //
 /*--------------------------------------------------------------------------*/
 
-<template>
-    <div>
-        <Mbutton text="😊即将开放..." :enable="false"/>
-    </div>
-</template>
+import request from '../utils/request.js'
 
-<script>
-import Mbutton from '../../../components/MButton.vue'
-
-export default {
-    components:{
-        Mbutton
-    }
+//获取评论分页数据
+export function QueryUserAbout(data){
+    return request({
+        url : "api/usercenter/queryuserabout",
+        method:"post",
+        data
+    });
 }
-</script>

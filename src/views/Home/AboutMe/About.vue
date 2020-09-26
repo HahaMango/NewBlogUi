@@ -28,11 +28,12 @@
 let marked = require('marked');
 import hljs from "highlight.js";
 import 'highlight.js/styles/ocean.css';
+import {QueryUserAbout} from '../../../api/usercenter.js'
 
 export default {
     data:function(){
         return{
-            desc:'# Profile \n\n### **姓名：陈子华**\n\n#### **学历：大专 佛山职业技术学院**\n\n#### **专业：电气自动化**\n\nEmail：q932104843@outlook.com\n\nGithub：https://github.com/HahaMango\n\n微信公众号：ChivaStudio\n\n***\n\n该网站是本人业余时间从后端到前端重头自己搭建的，平时空闲会写写一些技术分享文章，希望大家喜欢。\n\n本人目前在广州工作，曾从事大型机械设备程序的开发（PLC），目前在广州从事软件开发工作。比较擅长`.Net`，`.Net Core`平台的开发。如有工作需要可以发邮件到上面我的邮箱`javsdfw`里面。\n\n'
+            desc:''
         }
     },
     mounted:function(){
@@ -50,10 +51,26 @@ export default {
             smartypants: false,
             xhtml: false
         });
-        var d = window.document.getElementById('about-markdown-preview')
-        d.innerHTML = marked(this.desc);
+        this.QueryUserAbout();
+    },
+    watch:{
+        desc:function(val){
+            var d = window.document.getElementById('about-markdown-preview');
+            d.innerHTML = marked(val);
+        }
     },
     components:{
+    },
+    methods:{
+        async QueryUserAbout(){
+            var req = new Object();
+            req.userId = "1305520603926761472";
+            var result = await QueryUserAbout(req);
+
+            if(result.code == 200){
+                this.desc = result.data.desc;
+            }
+        }
     }
 }
 </script>

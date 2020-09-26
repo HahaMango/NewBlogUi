@@ -64,7 +64,7 @@
             />
         </div>
         <div>
-            <LoadNextButton :width="200" :enable="commentHasNext" :text="commentHasNext ? '🔽加载更多！':'没有更多了😯...' " v-on:loadNextClick="loadNextEvent"/>
+            <LoadNextButton :width="200" :enable="commentHasNext" :text="commentHasNext ? '🔽加载更多！':'没有更多了😯...' "/>
         </div> 
     </div>
 </template>
@@ -81,6 +81,8 @@ const viewsvgpath = require('../../../img/view.svg');
 const commentsvgpath = require('../../../img/comment.svg');
 const timesvgpath = require('../../../img/time.svg');
 let marked = require('marked');
+import hljs from "highlight.js";
+import 'highlight.js/styles/ocean.css';
 import CommentInput from '../../../components/CommentInput.vue';
 import ArticleComment from '../../../components/ArticleComment.vue';
 import LoadNextButton from '../../../components/LoadNextButton.vue';
@@ -88,6 +90,8 @@ import Gl from '../../../components/GradientsLine.vue';
 import { isEmptyString } from '../../../utils/utils.js';
 import { ToBottomEventSetting } from '../../../utils/utils.js';
 import { RemoveBottomEventSetting } from '../../../utils/utils.js';
+
+let p = null;
 
 export default {
     data:function(){
@@ -129,9 +133,24 @@ export default {
         this.getCommentList(this.commentDefalutPage,this.commentDefalutSize);
     },
     mounted:function(){
+        p = this;
+        marked.setOptions({
+            renderer: new marked.Renderer(),
+            highlight: function(code) {
+                return hljs.highlightAuto(code).value;
+            },
+            pedantic: false,
+            gfm: true,
+            tables: true,
+            breaks: false,
+            sanitize: false,
+            smartLists: true,
+            smartypants: false,
+            xhtml: false
+        });
         ToBottomEventSetting(function(){
-            if(this.commentHasNext){
-                this.getCommentList(++this.currentCommentPage,this.commentDefalutSize);
+            if(p.commentHasNext){
+                p.getCommentList(++p.currentCommentPage,p.commentDefalutSize);
             }
         });
 

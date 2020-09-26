@@ -6,7 +6,7 @@ import { isEmptyString } from '../utils/utils.js';
 const service = axios.create({
     baseURL: "http://test.api.hahamango.cn/", // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
-    timeout: 10000 // request timeout
+    timeout: 60000 // request timeout
 })
 
 // request interceptor
@@ -17,6 +17,7 @@ service.interceptors.request.use(
         if(!isEmptyString(token)){
             config.headers['Authorization'] = 'Bearer ' + token;
         }
+        //config.headers['Authorization'] = 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEzMDU1MjA2MDM5MjY3NjE0NzIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiQ2hpdmFfQ2hlbiIsImF1ZCI6WyJtYW5nby5hZG1pbiIsIm1hbmdvLnVzZXJjZW50ZXIiXSwiZXhwIjoxNjAxNzA3MjcxLCJpc3MiOiJoYWhhbWFuZ28uY24ifQ.vRkAWg373ZWlFjrg15LscKt7Q9ZN8nA7iVU5Q46Y0BQ";
         return config
     },
     error => {
