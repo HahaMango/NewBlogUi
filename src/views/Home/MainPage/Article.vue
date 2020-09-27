@@ -181,7 +181,7 @@ export default {
             this.content = rsp.content;
             this.contentType = rsp.contentType;
             this.categoryId = rsp.categoryId;
-            this.view = rsp.view;
+            this.view = this.view + rsp.view;
             this.comment = rsp.comment;
             this.like = rsp.like;
             this.createTime = rsp.createTime;

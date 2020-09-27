@@ -4,7 +4,7 @@ import { isEmptyString } from '../utils/utils.js';
 
 // create an axios instance
 const service = axios.create({
-    baseURL: "http://test.api.hahamango.cn/", // url = base url + request url
+    baseURL: "https://api.hahamango.cn/", // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 60000 // request timeout
 })
