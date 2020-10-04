@@ -4,42 +4,42 @@
         <div class="article-tag">
         <el-row>
             <!--作者-->
-            <el-col :span="1">
+            <el-col :span="1" :xs="2">
                 <img :src="authorpath"/>
             </el-col>
-            <el-col :span="3" class="article-content-left">
+            <el-col :span="3" :xs="5" class="article-content-left">
                 <span>{{userName}}</span>
             </el-col>
             <!--创建时间-->
-            <el-col :span="1">
+            <el-col :span="1" :xs="2">
                 <img :src="timepath"/>
             </el-col>
-            <el-col :span="3" class="article-content-left">
+            <el-col :span="3" :xs="5" class="article-content-left">
                 {{createTime}}
             </el-col>
             <!--占位用-->
-            <el-col :span="10">
+            <el-col :span="10" :xs="24">
                 <div style="height:1px;"></div>
             </el-col>
             <!--点赞数-->
-            <el-col :span="1">
+            <el-col :span="1" :xs="2">
                 <img :src="likepath"/>
             </el-col>
-            <el-col :span="1" class="article-content-left">
+            <el-col :span="1" :xs="5" class="article-content-left">
                 <span>{{like}}</span>
             </el-col>
             <!--阅读数-->
-            <el-col :span="1">
+            <el-col :span="1" :xs="2">
                 <img :src="viewpath"/>
             </el-col>
-            <el-col :span="1" class="article-content-left">
+            <el-col :span="1" :xs="5" class="article-content-left">
                 <span>{{view}}</span>
             </el-col>
             <!--评论数-->
-            <el-col :span="1">
+            <el-col :span="1" :xs="2">
                 <img :src="commentpath"/>
             </el-col>
-            <el-col :span="1" class="article-content-left">
+            <el-col :span="1" :xs="5" class="article-content-left">
                 <span>{{comment}}</span>
             </el-col>
         </el-row>
@@ -47,7 +47,7 @@
         <Gl/>
         <div id="content" class="marked-div"></div>
         <div style="margin-top:5em;">
-            <CommentInput v-on:submitEvent="submitCommentEvent" v-on:clearInputEvent="clearInputEvent" :initText="commentContent" :initUserName="initUserName"/>
+            <CommentInput class="article-comment-input" v-on:submitEvent="submitCommentEvent" v-on:clearInputEvent="clearInputEvent" :initText="commentContent" :initUserName="initUserName"/>
         </div>
         <div style="width:95%;margin:0px auto 0px auto;">
             <ArticleComment v-for="item in commentList"
@@ -401,6 +401,11 @@ export default {
     padding: 0% 0% 0% 0%;
 }
 
+.article-comment-input{
+    width:90%;
+    margin: 0em auto 0em auto;
+}
+
 .article-tag{
     font-size: 0.8em;
 }
@@ -413,6 +418,11 @@ export default {
 @media screen and (min-width: 769px) {
 .article-content{
     padding: 0% 2% 0% 2%;
+}
+
+.article-comment-input{
+    width:65%;
+    margin: 0em auto 0em auto;
 }
 }
 </style>

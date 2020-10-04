@@ -126,6 +126,9 @@ export default {
   border-color: #777777;
 }
 
+.marked-div p {
+}
+
 .marked-div p code{
   background-color: #444444;
   border-radius: 0.2em;

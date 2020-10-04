@@ -1,27 +1,24 @@
 <template>
     <div class="comment-area-main-div">
-        <el-row>
-            <el-col :span="5"><div style="height:1px"></div></el-col>
-            <el-col :span="14" class="comment-area">
+            <div class="comment-area">
                 <Mtextarea class="comment-textarea" :initText="initText" v-on:onchangeEvent="mtextareaChangeEvent" v-on:clearInputEvent="mtextareaClearEvent"/>
-                <el-row>
-                    <el-col :span="8">
-                        <div style="height:1px"></div>
-                    </el-col>
-                    <el-col :span="10">
+                <el-row class="comment-area-row">
+                    <el-col :span="5" :xs="12">
                         <div class="comment-span">
                             <span>匿名用户名：</span>
                         </div>
                     </el-col>
-                    <el-col :span="3">
+                    <el-col :span="7" :xs="12">
                         <Mtext class="comment-text" :initText="initUserName" v-on:onchangeEvent="mtextChangeEvent"/>
                     </el-col>
-                    <el-col :span="3">
+                    <el-col :span="6" :xs="24">
+                        <div style="height:1px;"></div>
+                    </el-col>
+                    <el-col :span="6" :xs="24">
                         <Mbutton text="评论" class="comment-button" v-on:mbuttonClickEvent="submitEvent" :enable="true"/>
                     </el-col>
                 </el-row>
-            </el-col>
-        </el-row>
+            </div>
     </div>
 </template>
 
@@ -85,5 +82,10 @@ export default {
 
 .comment-button{
     margin-top: 0.5em;
+}
+
+.comment-area-row{
+    padding-left: 0.3em;
+    padding-right: 0.3em;
 }
 </style>
