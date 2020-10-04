@@ -153,8 +153,6 @@ export default {
                 p.getCommentList(++p.currentCommentPage,p.commentDefalutSize);
             }
         });
-
-        this.incArticleVie();
     },
     destroyed:function(){
         RemoveBottomEventSetting();
@@ -186,6 +184,8 @@ export default {
             this.like = rsp.like;
             this.createTime = rsp.createTime;
             this.createTime = this.createTime.split(' ')[0];
+            
+            this.incArticleVie();
         },
         //加载评论列表
         async getCommentList(page,size){
