@@ -36,6 +36,8 @@ export default {
     font-size: 1.1em;
     cursor: pointer;
     outline: none;
+    border-bottom: solid 0.1em;
+    border-bottom-color: transparent;
 }
 
 .navigation-button:hover{

@@ -36,7 +36,7 @@ export function ToBottomEventSetting(callback){
             //窗口可视范围高度
             var clientHeight = d.clientHeight;
         
-            if(clientHeight + scrollTop >= scrollHeight){
+            if(clientHeight + scrollTop >= scrollHeight - 3){
                 callback();
             }
     },250);

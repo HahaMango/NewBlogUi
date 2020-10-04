@@ -20,7 +20,7 @@
   <div>
     <el-scrollbar id="mscrollbar" :wrapStyle="[{'overflow-x':'hidden'}]">
       <el-container class="blog-container">
-        <el-header class="blog-header">
+        <el-header class="blog-header" style="height:auto;">
           <el-row>
             <el-col :xs="24" :sm="12" :span="16">
             <div class="header-title">Chiva Studio</div>
@@ -42,7 +42,7 @@
             </el-col>
             <el-col :xs="6" :sm="3" :span="2">
               <div class="header-button">
-                <NavigationButton content="关于我" routeUrl="/about"/>
+                <NavigationButton content="关于" routeUrl="/about"/>
               </div>
             </el-col>
           </el-row>

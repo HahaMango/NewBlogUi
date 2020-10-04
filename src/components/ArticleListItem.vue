@@ -54,17 +54,16 @@ export default {
 
 <style>
 .article-item{
-    border-bottom-style: solid;
-    border-width: 0.05em;
-    border-image:radial-gradient( #ffffff,#47474700) 1 10;
+    border-bottom: 0.01em transparent solid;
+    border-image:radial-gradient( #ffffff 0%,#2b2b2b 68%) 0% 0% 100% 0%;
     padding: 0.5em;
     cursor: pointer;
     margin: 0.5em;
 }
 
 .article-item img{
-    height: 6em;
-    width: 6em;
+    height: 0.8em;
+    width: 0.8em;
 }
 
 .article-item-count{
@@ -76,7 +75,7 @@ export default {
 }
 
 .article-item-date{
-    font-size: 0.1em;
+    font-size: 0.8em;
     width: 90%;
     margin: 0em auto 0em auto;
 }
@@ -87,7 +86,7 @@ export default {
 
 @media screen and (min-width: 769px) {
 .article-item-date{
-    font-size: 0.1em;
+    font-size: 0.7em;
     width: 40%;
     margin: 0em auto 0em auto;
 }
