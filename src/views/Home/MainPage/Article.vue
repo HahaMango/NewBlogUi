@@ -46,7 +46,8 @@
         </div>
         <Gl/>
         <div id="content" class="marked-div"></div>
-        <div style="margin-top:5em;">
+        <Gl/>
+        <div style="margin-top:3em;">
             <CommentInput class="article-comment-input" v-on:submitEvent="submitCommentEvent" v-on:clearInputEvent="clearInputEvent" :initText="commentContent" :initUserName="initUserName"/>
         </div>
         <div style="width:95%;margin:0px auto 0px auto;">
