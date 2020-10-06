@@ -55,7 +55,7 @@
             <a href="https://github.com/HahaMango/NewBlogUi" target="_blank">
               <img :src="GithubImgPath"/>
             </a>
-            <p>Power by <b><i>Vue</i></b> / <b><i>Element</i></b> ---- Service power by <b><i>.net Core</i></b></p>
+            <p>Power by <b><i>Dotnet Core</i></b> / <b><i>Vue</i></b> / <b><i>Element</i></b></p>
           </div>
         </el-footer>
       </el-container>
