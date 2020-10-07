@@ -166,6 +166,7 @@ export default {
   border-spacing: 0;
   border-top: 0.1em solid #777777;
   border-left: 0.1em solid #777777;
+  background-color: #444444;
 }
 
 .marked-div table td{

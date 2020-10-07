@@ -1,5 +1,6 @@
 <template>
-    <div class="article-content">
+    <div class="article-content" v-loading="loading" element-loading-background="#2b2b2b">
+        <div v-show="!loading">
         <h1>{{title}}</h1>
         <div class="article-tag">
         <el-row>
@@ -67,6 +68,10 @@
         <div>
             <LoadNextButton :width="200" :enable="commentHasNext" :text="commentHasNext ? '🔽加载更多！':'没有更多了😯...' "/>
         </div> 
+        </div>
+        <!--加载动画占位符-->
+        <div v-if="loading" style="height:5em;">
+        </div>
     </div>
 </template>
 
@@ -126,7 +131,8 @@ export default {
             commentDefalutPage:1,
             commentDefalutSize:20,
             currentCommentPage:1,
-            currentCommentSize:20
+            currentCommentSize:20,
+            loading:true
         }
     },
     created:function(){
@@ -160,6 +166,7 @@ export default {
     },
     watch :{
         content:function(val){
+            this.loading = false;
             var d = window.document.getElementById('content')
             d.innerHTML = marked(val);
         }
@@ -185,7 +192,7 @@ export default {
             this.like = rsp.like;
             this.createTime = rsp.createTime;
             this.createTime = this.createTime.split(' ')[0];
-            
+
             this.incArticleVie();
         },
         //加载评论列表

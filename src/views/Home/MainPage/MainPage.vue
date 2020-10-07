@@ -17,7 +17,7 @@
 /*--------------------------------------------------------------------------*/
 
 <template>
-    <div>
+    <div v-loading="loading" element-loading-background="#2b2b2b">
         <div>
             <ArticleListItem v-for="item in articleList"
                 :key="item.articleid"
@@ -59,7 +59,8 @@ export default {
             currentPage : 1,
             currentSize : 10,
             //分页是否存在下一页
-            hasNext:true
+            hasNext:true,
+            loading:true
         }
     },
     created:function(){
@@ -109,6 +110,7 @@ export default {
             if(this.articleList.length >= list.count){
                 this.hasNext = false;
             }
+            this.loading = false;
         },
         loadNextEvent:function(){
             this.getArticlePage(++this.currentPage, this.defalutSize);

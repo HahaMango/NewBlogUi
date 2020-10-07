@@ -17,8 +17,11 @@
 /*--------------------------------------------------------------------------*/
 
 <template>
-    <div class="about-content">
-        <div id="about-markdown-preview" class="marked-div">
+    <div class="about-content" v-loading="loading" element-loading-background="#2b2b2b">
+        <div id="about-markdown-preview" class="marked-div" v-show="!loading">
+        </div>
+                <!--加载动画占位符-->
+        <div v-if="loading" style="height:5em;">
         </div>
     </div>
 </template>
@@ -33,7 +36,8 @@ import {QueryUserAbout} from '../../../api/usercenter.js'
 export default {
     data:function(){
         return{
-            desc:''
+            desc:'',
+            loading:true
         }
     },
     mounted:function(){
@@ -55,6 +59,7 @@ export default {
     },
     watch:{
         desc:function(val){
+            this.loading = false;
             var d = window.document.getElementById('about-markdown-preview');
             d.innerHTML = marked(val);
         }
@@ -70,6 +75,7 @@ export default {
             if(result.code == 200){
                 this.desc = result.data.desc;
             }
+            this.loading = false;
         }
     }
 }
