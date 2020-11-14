@@ -1,5 +1,5 @@
 <template>
-    <div class="mcard">
+    <div class="mcard" v-on:click="clickEvent">
         <h2 class="card-head">
             {{projectName}}
         </h2>
@@ -18,6 +18,11 @@ export default {
     computed:{
         hasPlatform:function(){
             return !isEmptyString(this.platform);
+        }
+    },
+    methods:{
+        clickEvent:function() {
+            this.$emit('clickEvent',this.id);
         }
     }
 }

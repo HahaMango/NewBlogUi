@@ -1,5 +1,5 @@
 <template>
-    <div class="micard">
+    <div class="micard" v-on:click="clickEvent">
         <div v-bind:style="{paddingTop:'7em',borderTopLeftRadius: '0.5em',borderTopRightRadius: '0.5em', background: imageUrl,height: 'auto',width: 'auto',backgroundSize:'cover'}">
             <div class="micard-head">
                 <h2>{{projectName}}</h2>
@@ -23,6 +23,11 @@ export default {
         },
         imageUrl:function(){
             return "url('" + this.image + "')"
+        }
+    },
+    methods:{
+        clickEvent:function() {
+            this.$emit('clickEvent',this.id);
         }
     }
 }

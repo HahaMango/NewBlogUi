@@ -6,6 +6,7 @@ import { Message } from 'element-ui';
 // create an axios instance
 const service = axios.create({
     baseURL: "https://api.hahamango.cn/", // url = base url + request url
+    //baseURL: "https://localhost:5001/",
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 60000 // request timeout
 })
