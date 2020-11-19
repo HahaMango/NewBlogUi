@@ -36,7 +36,9 @@
                     <a :href="detail.repositoryUrl" target="_blank" v-if="hasRepositoryUrl">项目链接</a>
                     <div v-if="hasReadme">
                         <h1>Readme</h1>
-                        <div id="opensource-markdown-preview" class="marked-div">
+                        <div class="opensource-readme">
+                            <div id="opensource-markdown-preview" class="marked-div">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -88,7 +90,7 @@ export default {
         //查询开源项目
         async getOpenSourceList(){
             var req = new Object();
-            req.userId = "13212312";
+            req.userId = "1305520603926761472";
             req.pageParm = new Object();
             req.pageParm.page = 1;
             req.pageParm.size = 100;
@@ -101,15 +103,16 @@ export default {
                 this.topTwo.push(ol[i]);
             }
             //之后的元素放进另一个数组
-            var randomWidth = [8,6,10];
+            var randomWidth = [8,7,9];
+            var widthIndex = Math.ceil(Math.random()*10);
+            widthIndex = widthIndex % 3;
             while(i < ol.length){
-                var widthIndex = Math.ceil(Math.random()*10);
-                widthIndex = widthIndex % 3;
+                var startIndex = (widthIndex++) % 3;
                 var oRowObject = new Object();
                 var oRow = new Array();
                 for(var k = 0;k < 3 && i < ol.length;k++,i++){
                     var col = new Object();
-                    col.width = randomWidth[(widthIndex++)%3];
+                    col.width = randomWidth[(startIndex++)%3];
                     col.data = ol[i];
                     oRow.push(col);
                 }
@@ -158,5 +161,9 @@ export default {
 </script>
 
 <style>
-
+.opensource-readme{
+    overflow:scroll;
+    overflow-x: hidden;
+    max-height: 20em;
+}
 </style>
